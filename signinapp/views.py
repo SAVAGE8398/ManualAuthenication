@@ -27,5 +27,10 @@ def signin(request):
     
     return render(request, 'signin.html')
 def profile(request):
-    return render(request, 'profile.html')
+    if (request.session.get('LoginID')):
+        loginid=request.session.get('LoginID')
+        d1=SignDB.objects.get(id=loginid)
+        return render(request, "profile.html", {"sessionid":d1})
+    else:
+        return render(request, 'signin.html')
     
