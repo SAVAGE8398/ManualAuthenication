@@ -12,6 +12,9 @@
 
     {{ sessionid.EmailF }}
     {{ sessionid.PasswordF }}
-    {% endblock %} 
+    {%  url 'index' %}
+    <a href="{% url "index" %}">HOME</a>
+    {% endblock %}
+    
 </body>
 </html>

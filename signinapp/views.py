@@ -34,3 +34,9 @@ def profile(request):
     else:
         return render(request, 'signin.html')
     
+def logout(request):
+    try:
+        del request.session.get('sessionid') 
+    except KeyError:
+        pass
+    return redirect('signin')
