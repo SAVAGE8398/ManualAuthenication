@@ -40,13 +40,17 @@
               <div class="hidden md:block md:ml-10 md:pr-4 md:space-x-8">
                 <a href="/" class="font-medium text-gray-500 hover:text-gray-900">Homepage</a>
   
-                <a href="#" class="font-medium text-gray-500 hover:text-gray-900">Contact Us</a>
+                <a href="/signup" class="font-medium text-gray-500 hover:text-gray-900">Signup</a>
   
+                
+                {% if 'uid' in request.session %}
                 <a href="#" class="font-medium text-gray-500 hover:text-gray-900">Profile</a>
   
-                <a href="/signup" class="font-medium text-gray-500 hover:text-gray-900">Sign Up</a>
-  
-                <a href="/signin" class="font-medium text-indigo-600 hover:text-indigo-500">Log in</a>
+                <a href="/logout" class="font-medium text-indigo-600 hover:text-indigo-500">Logout</a>
+                {% else %}
+                <a href="/signin" class="font-medium text-gray-500 hover:text-gray-900">Signin</a>
+
+                {% endif %}
               </div>
             </nav>
           </div>

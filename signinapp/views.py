@@ -2,7 +2,14 @@ from django.shortcuts import redirect, render
 from signinapp.models import SignDB
 # Create your views here.
 def index(request):
+    if(request.session.get('uid')):
+        uid=request.session['uid']
+        d1=SignDB.objects.get(id=uid)
+        
+        return render(request, 'index.html',{'uid':d1})
+    
     return render(request, 'index.html')
+    
 
 def signup(request):
     if request.method == 'POST':
@@ -18,25 +25,27 @@ def signin(request):
         varEmail = request.POST.get('emailhtml')
         varPassword= request.POST.get('passwordhtml')
         try:
-            varlogin=SignDB.objects.get(EmailF=varEmail,PasswordF=varPassword)
+            u=SignDB.objects.get(EmailF=varEmail,PasswordF=varPassword)
         except SignDB.DoesNotExist:
             return render(request, 'signin.html') 
         else:
-            request.session['LoginID']=varlogin.id  
+            request.session['uid']=u.id  
             return redirect('profile')    
     
     return render(request, 'signin.html')
+
 def profile(request):
-    if (request.session.get('LoginID')):
-        loginid=request.session.get('LoginID')
-        d1=SignDB.objects.get(id=loginid)
-        return render(request, "profile.html", {"sessionid":d1})
+    if(request.session.get('uid')):
+        uid=request.session['uid']
+        d1=SignDB.objects.get(id=uid)
+        return render(request,'profile.html',{'uid':d1})
     else:
-        return render(request, 'signin.html')
+        return render(request,'signin.html')
     
+
 def logout(request):
     try:
-        del request.session.get('sessionid') 
-    except KeyError:
+        del request.session['uid']    
+    except KeyError:        
         pass
     return redirect('signin')
